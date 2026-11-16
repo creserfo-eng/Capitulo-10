@@ -1,0 +1,2 @@
+body{font-family:Arial,sans-serif;margin:2rem auto;max-width:850px;padding:0 1rem;color:#222;line-height:1.5}h1,h2{color:#24476b}button,input{padding:.5rem;margin:.25rem}table{border-collapse:collapse;margin:1rem 0;min-width:320px}th,td{border:1px solid #aaa;padding:.45rem .8rem;text-align:left}th{background:#eaf1f7}img{max-width:130px;vertical-align:middle} .dados{display:grid;grid-template-columns:repeat(6,60px);gap:8px}.dados img{width:55px}
+ol{display:flex;gap:2rem;list-style:none;padding:0;margin:.4rem 0}li{min-width:1rem}

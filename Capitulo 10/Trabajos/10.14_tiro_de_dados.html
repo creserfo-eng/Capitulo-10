@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicio 10.14 - Simulación de dados</title>
+<style>body{font-family:Arial;max-width:850px;margin:30px auto;padding:0 16px}
+table{border-collapse:collapse;margin-top:15px}td,th{border:1px solid #999;padding:7px;text-align:center}</style>
+</head>
+<body>
+<h1>Ejercicio 10.14 - Simulación de dos dados</h1>
+<button id="simular">Realizar 36 000 tiros</button>
+<div id="salida"></div>
+<script>
+"use strict";
+function simular() {
+  // La matriz registra cada combinación posible de los dos dados.
+  const combinaciones = Array.from({length: 7}, () => new Array(7).fill(0));
+  const frecuencias = new Array(13).fill(0);
+  for (let tiro = 0; tiro < 36000; tiro++) {
+    const dado1 = 1 + Math.floor(Math.random() * 6);
+    const dado2 = 1 + Math.floor(Math.random() * 6);
+    combinaciones[dado1][dado2]++;
+    frecuencias[dado1 + dado2]++;
+  }
+  let html = "<h2>Frecuencia de cada suma</h2><table><tr><th>Suma</th><th>Veces</th><th>Porcentaje</th></tr>";
+  for (let suma = 2; suma <= 12; suma++) {
+    const porcentaje = (frecuencias[suma] / 36000 * 100).toFixed(2);
+    html += `<tr><td>${suma}</td><td>${frecuencias[suma]}</td><td>${porcentaje}%</td></tr>`;
+  }
+  html += "</table><h2>Combinaciones de los dados</h2><table><tr><th>Dado 1 / Dado 2</th>";
+  for (let j=1;j<=6;j++) html += `<th>${j}</th>`;
+  html += "</tr>";
+  for (let i=1;i<=6;i++) {
+    html += `<tr><th>${i}</th>`;
+    for (let j=1;j<=6;j++) html += `<td>${combinaciones[i][j]}</td>`;
+    html += "</tr>";
+  }
+  html += "</table><p>La suma 7 tiene seis combinaciones posibles; por eso se espera que aparezca aproximadamente 1/6 de las veces (cerca de 6000 tiros).</p>";
+  document.getElementById("salida").innerHTML = html;
+}
+document.getElementById("simular").addEventListener("click", simular);
+simular();
+</script>
+</body></html>

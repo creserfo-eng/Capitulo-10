@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicio 10.16 - Criba de Eratóstenes</title>
+<style>body{font-family:Arial;max-width:850px;margin:30px auto;padding:0 16px}#primos{line-height:1.8}</style>
+</head>
+<body>
+<h1>Ejercicio 10.16 - Criba de Eratóstenes</h1>
+<p>Números primos entre 1 y 999:</p><p id="primos"></p>
+<script>
+"use strict";
+const esPrimo = new Array(1000).fill(true);
+esPrimo[0]=false;
+esPrimo[1]=false;
+for (let indice=2; indice<1000; indice++) {
+  if (esPrimo[indice]) {
+    for (let multiplo=indice*2; multiplo<1000; multiplo+=indice) {
+      esPrimo[multiplo]=false;
+    }
+  }
+}
+const primos=[];
+for (let indice=2; indice<1000; indice++) {
+  if (esPrimo[indice]) primos.push(indice);
+}
+document.getElementById("primos").textContent=primos.join(", ");
+</script>
+</body></html>

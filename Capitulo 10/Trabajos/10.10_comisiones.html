@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicio 10.10 - Comisiones</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:850px;margin:30px auto;padding:0 16px}
+input,button{padding:8px;margin:5px} table{border-collapse:collapse;margin-top:15px}
+td,th{border:1px solid #999;padding:8px;text-align:left}
+</style>
+</head>
+<body>
+<h1>Ejercicio 10.10 - Salarios por comisión</h1>
+<p>El vendedor recibe $200 más el 9% de sus ventas. El salario se trunca a un entero.</p>
+<form id="formulario">
+<label>Ventas brutas de la semana ($):
+<input id="ventas" type="number" min="0" step="0.01" required></label>
+<button type="submit">Registrar vendedor</button>
+</form>
+<p id="mensaje">Vendedores registrados: 0</p>
+<table>
+<thead><tr><th>Rango de salario</th><th>Número de vendedores</th></tr></thead>
+<tbody id="resultados"></tbody>
+</table>
+<script>
+"use strict";
+const rangos = ["$200–299","$300–399","$400–499","$500–599",
+                "$600–699","$700–799","$800–899","$900–999","$1000 o más"];
+const contadores = new Array(9).fill(0);
+let vendedores = 0;
+
+function mostrar() {
+  const cuerpo = document.getElementById("resultados");
+  cuerpo.innerHTML = "";
+  rangos.forEach((rango, i) => {
+    const fila = document.createElement("tr");
+    fila.innerHTML = `<td>${rango}</td><td>${contadores[i]}</td>`;
+    cuerpo.appendChild(fila);
+  });
+  document.getElementById("mensaje").textContent =
+    `Vendedores registrados: ${vendedores}`;
+}
+document.getElementById("formulario").addEventListener("submit", e => {
+  e.preventDefault();
+  const ventas = Number(document.getElementById("ventas").value);
+  if (!Number.isFinite(ventas) || ventas < 0) {
+    alert("Introduce una cantidad válida de ventas.");
+    return;
+  }
+  const salario = Math.floor(200 + ventas * 0.09);
+  let indice = salario >= 1000 ? 8 : Math.floor((salario - 200) / 100);
+  indice = Math.max(0, Math.min(8, indice));
+  contadores[indice]++;
+  vendedores++;
+  document.getElementById("ventas").value = "";
+  mostrar();
+});
+mostrar();
+</script>
+</body>
+</html>

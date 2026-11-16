@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicio 10.17 - Carrera de la tortuga y la liebre</title>
+<style>body{font-family:Arial;max-width:850px;margin:30px auto;padding:0 16px}
+pre{font-family:monospace;white-space:pre;background:#f3f3f3;padding:12px;overflow:auto}</style>
+</head>
+<body>
+<h1>Ejercicio 10.17 - Carrera de la tortuga y la liebre</h1>
+<button id="iniciar">Iniciar carrera</button>
+<div id="resultado"></div><pre id="pista"></pre>
+<script>
+"use strict";
+function carrera() {
+  let tortuga=1, liebre=1, salida="";
+  const maximoTics=1000;
+  for (let tic=1; tic<=maximoTics; tic++) {
+    // Movimiento de la tortuga: 1-5 rápido, 6-7 resbalón, 8-10 lento.
+    const t=Math.floor(Math.random()*10)+1;
+    if (t<=5) tortuga+=3;
+    else if (t<=7) tortuga-=6;
+    else tortuga+=1;
+    tortuga=Math.max(1,tortuga);
+
+    // Movimiento de la liebre: 1-2 dormir, 3-4 gran salto, 5 gran resbalón,
+    // 6-8 pequeño salto, 9-10 pequeño resbalón.
+    const h=Math.floor(Math.random()*10)+1;
+    if (h<=2) { /* duerme */ }
+    else if (h<=4) liebre+=9;
+    else if (h===5) liebre-=12;
+    else if (h<=8) liebre+=1;
+    else liebre-=2;
+    liebre=Math.max(1,liebre);
+
+    const posiciones=Array(70).fill(" ");
+    if (tortuga===liebre && tortuga<=70) {
+      const inicio=Math.min(69,tortuga-1);
+      salida += `Tic ${tic}: OUCH!!!\n`;
+      posiciones[inicio]="OUCH!!!";
+    } else {
+      if (tortuga<=70) posiciones[tortuga-1]="T";
+      if (liebre<=70) posiciones[liebre-1]="H";
+    }
+    salida += posiciones.join("").replace(/\s+$/,"")+"\n";
+    if (tortuga>=70 || liebre>=70) {
+      if (tortuga>=70 && liebre>=70) salida+="Es un empate.";
+      else if (tortuga>=70) salida+="LA TORTUGA GANA!!! YAY!!!";
+      else salida+="La liebre gana. Qué mal.";
+      break;
+    }
+  }
+  document.getElementById("pista").textContent=salida;
+  document.getElementById("resultado").textContent="Carrera terminada.";
+}
+document.getElementById("iniciar").addEventListener("click", carrera);
+</script>
+</body></html>

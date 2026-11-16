@@ -1,0 +1,2 @@
+function iniciar(){const elArreglo=[1,2,3,4,5,6,7,8,9,10];let total1=0,total2=0;for(let i=0;i<elArreglo.length;i++)total1+=elArreglo[i];let resultados=`<p>Total usando índices: ${total1}</p>`;for(const elemento in elArreglo)total2+=elArreglo[elemento];resultados+=`<p>Total usando for...in: ${total2}</p>`;document.getElementById("salida").innerHTML=resultados;}
+window.addEventListener("load",iniciar);

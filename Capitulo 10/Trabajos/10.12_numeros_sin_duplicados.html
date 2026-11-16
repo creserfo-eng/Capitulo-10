@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ejercicio 10.12 - Números sin duplicados</title>
+<style>body{font-family:Arial;max-width:750px;margin:30px auto;padding:0 16px}input,button{padding:8px}</style>
+</head>
+<body>
+<h1>Ejercicio 10.12 - Diez números sin duplicados</h1>
+<p>Introduce diez números del 10 al 100. Cada número se mostrará solo la primera vez.</p>
+<form id="formulario">
+<input id="numero" type="number" min="10" max="100" required>
+<button>Registrar número</button>
+</form>
+<p id="estado">Entradas realizadas: 0 de 10</p>
+<h2>Números diferentes recibidos</h2>
+<p id="salida"></p>
+<script>
+"use strict";
+const diferentes = []; // Es el arreglo más pequeño necesario: solo guarda valores únicos.
+let entradas = 0;
+const formulario = document.getElementById("formulario");
+formulario.addEventListener("submit", e => {
+  e.preventDefault();
+  if (entradas >= 10) return;
+  const campo = document.getElementById("numero");
+  const n = Number(campo.value);
+  if (!Number.isInteger(n) || n < 10 || n > 100) {
+    alert("El número debe ser un entero entre 10 y 100.");
+    return;
+  }
+  entradas++;
+  if (!diferentes.includes(n)) diferentes.push(n);
+  document.getElementById("salida").textContent = diferentes.join(", ");
+  document.getElementById("estado").textContent = `Entradas realizadas: ${entradas} de 10`;
+  campo.value = "";
+  if (entradas === 10) {
+    campo.disabled = true;
+    formulario.querySelector("button").disabled = true;
+    document.getElementById("estado").textContent += " (terminado)";
+  }
+});
+</script>
+</body></html>
